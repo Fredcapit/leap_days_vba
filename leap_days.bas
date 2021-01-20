@@ -3,7 +3,7 @@ Const d_min As String = "01.03.1900"
 Const d_max As String = "31.12.2899"
 
 
-Public Function бхянйнямшу_дмеи(ByVal val_begin As Long, ByVal val_end As Long) As Long
+Public Function п▓п≤п║п·п п·п║п²п╚п╔_п■п²п∙п≥(ByVal val_begin As Long, ByVal val_end As Long) As Long
     
     Dim d_begin, d_end As Date
     
@@ -14,7 +14,7 @@ Public Function бхянйнямшу_дмеи(ByVal val_begin As Long, ByVal val_end As Long) 
     check_error = check_constrains(d_begin, d_end)
     
     If IsError(check_error) Then
-        бхянйнямшу_дмеи = check_error
+        п▓п≤п║п·п п·п║п²п╚п╔_п■п²п∙п≥ = check_error
         Exit Function
     End If
     
@@ -23,12 +23,12 @@ Public Function бхянйнямшу_дмеи(ByVal val_begin As Long, ByVal val_end As Long) 
     
     result = first_quartet_leap_year_days(d_begin, d_end) + middle_quartets_leap_year_days(d_begin, d_end) + last_quartet_leap_year_days(d_begin, d_end)
     
-    бхянйнямшу_дмеи = result
+    п▓п≤п║п·п п·п║п²п╚п╔_п■п²п∙п≥ = result
     
 End Function
 
 
-Public Function мебхянйнямшу_дмеи(ByVal val_begin As Long, ByVal val_end As Long) As Long
+Public Function п²п∙п▓п≤п║п·п п·п║п²п╚п╔_п■п²п∙п≥(ByVal val_begin As Long, ByVal val_end As Long) As Long
 
     Dim d_begin, d_end As Date
     
@@ -39,7 +39,7 @@ Public Function мебхянйнямшу_дмеи(ByVal val_begin As Long, ByVal val_end As Long
     check_error = check_constrains(d_begin, d_end)
     
     If IsError(check_error) Then
-        мебхянйнямшу_дмеи = check_error
+        п²п∙п▓п≤п║п·п п·п║п²п╚п╔_п■п²п∙п≥ = check_error
         Exit Function
     End If
         
@@ -50,7 +50,7 @@ Public Function мебхянйнямшу_дмеи(ByVal val_begin As Long, ByVal val_end As Long
              middle_quartet_nonleap_year_days(d_begin, d_end) + _
              last_quartet_nonleap_year_days(d_begin, d_end)
     
-    мебхянйнямшу_дмеи = result
+    п²п∙п▓п≤п║п·п п·п║п²п╚п╔_п■п²п∙п≥ = result
     
 End Function
 
