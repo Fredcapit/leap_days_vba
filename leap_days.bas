@@ -3,7 +3,7 @@ Const d_min As String = "01.03.1900"
 Const d_max As String = "31.12.2899"
 
 
-Public Function ВИСОКОСНЫХ_ДНЕЙ(ByVal val_begin As Long, ByVal val_end As Long) As Long
+Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long) As Long
     
     Dim d_begin, d_end As Date
     
@@ -14,7 +14,7 @@ Public Function ВИСОКОСНЫХ_ДНЕЙ(ByVal val_begin As Long, ByVal val
     check_error = check_constrains(d_begin, d_end)
     
     If IsError(check_error) Then
-        ВИСОКОСНЫХ_ДНЕЙ = check_error
+        LEAP_DAYS = check_error
         Exit Function
     End If
     
@@ -23,12 +23,12 @@ Public Function ВИСОКОСНЫХ_ДНЕЙ(ByVal val_begin As Long, ByVal val
     
     result = first_quartet_leap_year_days(d_begin, d_end) + middle_quartets_leap_year_days(d_begin, d_end) + last_quartet_leap_year_days(d_begin, d_end)
     
-    ВИСОКОСНЫХ_ДНЕЙ = result
+    LEAP_DAYS = result
     
 End Function
 
 
-Public Function НЕВИСОКОСНЫХ_ДНЕЙ(ByVal val_begin As Long, ByVal val_end As Long) As Long
+Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long) As Long
 
     Dim d_begin, d_end As Date
     
@@ -39,7 +39,7 @@ Public Function НЕВИСОКОСНЫХ_ДНЕЙ(ByVal val_begin As Long, ByVal
     check_error = check_constrains(d_begin, d_end)
     
     If IsError(check_error) Then
-        НЕВИСОКОСНЫХ_ДНЕЙ = check_error
+        NON_LEAP_DAYS = check_error
         Exit Function
     End If
         
@@ -50,7 +50,7 @@ Public Function НЕВИСОКОСНЫХ_ДНЕЙ(ByVal val_begin As Long, ByVal
              middle_quartet_nonleap_year_days(d_begin, d_end) + _
              last_quartet_nonleap_year_days(d_begin, d_end)
     
-    НЕВИСОКОСНЫХ_ДНЕЙ = result
+    NON_LEAP_DAYS = result
     
 End Function
 
