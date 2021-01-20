@@ -1,6 +1,6 @@
 Attribute VB_Name = "leap_days"
 Const d_min As String = "01.03.1900"
-Const d_max As String = "31.12.2899"
+Const d_max As String = "01.01.2900"
 
 
 Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long) As Long
