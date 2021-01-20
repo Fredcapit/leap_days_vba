@@ -3,12 +3,12 @@ Const d_min As String = "01.03.1900"
 Const d_max As String = "01.01.2900"
 
 
-Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long) As Long
+Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
     
     Dim d_begin, d_end As Date
     
-    d_begin = CDate(val_begin)
-    d_end = CDate(val_end)
+    d_begin = CDate(val_begin) + IIf(count_first_day <> 0, 0, 1)
+    d_end = CDate(val_end) + IIf(count_last_day <> 0, 1, 0)
     
     Dim check_error As Variant
     check_error = check_constrains(d_begin, d_end)
@@ -28,12 +28,12 @@ Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long) As Lo
 End Function
 
 
-Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long) As Long
+Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
 
     Dim d_begin, d_end As Date
     
-    d_begin = CDate(val_begin)
-    d_end = CDate(val_end)
+    d_begin = CDate(val_begin) + IIf(count_first_day <> 0, 0, 1)
+    d_end = CDate(val_end) + IIf(count_last_day <> 0, 1, 0)
     
     Dim check_error As Variant
     check_error = check_constrains(d_begin, d_end)
