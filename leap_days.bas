@@ -3,12 +3,16 @@ Const d_min As String = "01.03.1900"
 Const d_max As String = "01.01.2900"
 
 
-Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
+Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
     
     Dim d_begin, d_end As Date
     
-    d_begin = CDate(val_begin) + IIf(count_first_day <> 0, 0, 1)
-    d_end = CDate(val_end) + IIf(count_last_day <> 0, 1, 0)
+    count_first_day = IIf(count_first_day <> 0, 1, 0)
+    count_last_day = IIf(count_last_day <> 0, 1, 0)
+    
+    
+    d_begin = CDate(val_begin)
+    d_end = CDate(val_end)
     
     Dim check_error As Variant
     check_error = check_constrains(d_begin, d_end)
@@ -21,7 +25,12 @@ Public Function LEAP_DAYS (ByVal val_begin As Long, ByVal val_end As Long, Optio
     Dim result As Long
     result = 0
     
-    result = first_quartet_leap_year_days(d_begin, d_end) + middle_quartets_leap_year_days(d_begin, d_end) + last_quartet_leap_year_days(d_begin, d_end)
+    If is_year_leap(d_begin) And count_first_day = 1 Then result = result + 1
+    If is_year_leap(d_end) And count_last_day = 0 Then result = result - 1
+    
+    result = result + first_quartet_leap_year_days(d_begin, d_end) _
+            + middle_quartets_leap_year_days(d_begin, d_end) _
+            + last_quartet_leap_year_days(d_begin, d_end)
     
     LEAP_DAYS = result
     
@@ -32,8 +41,12 @@ Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Op
 
     Dim d_begin, d_end As Date
     
-    d_begin = CDate(val_begin) + IIf(count_first_day <> 0, 0, 1)
-    d_end = CDate(val_end) + IIf(count_last_day <> 0, 1, 0)
+    count_first_day = IIf(count_first_day <> 0, 1, 0)
+    count_last_day = IIf(count_last_day <> 0, 1, 0)
+    
+    
+    d_begin = CDate(val_begin)
+    d_end = CDate(val_end)
     
     Dim check_error As Variant
     check_error = check_constrains(d_begin, d_end)
@@ -46,7 +59,10 @@ Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Op
     Dim result As Long
     result = 0
     
-    result = first_quartet_nonleap_days(d_begin, d_end) + _
+    If Not is_year_leap(d_begin) And count_first_day = 1 Then result = result + 1
+    If Not is_year_leap(d_end) And count_last_day = 0 Then result = result - 1
+    
+    result = result + first_quartet_nonleap_days(d_begin, d_end) + _
              middle_quartet_nonleap_year_days(d_begin, d_end) + _
              last_quartet_nonleap_year_days(d_begin, d_end)
     
@@ -65,7 +81,7 @@ Private Function first_quartet_leap_year_days(ByVal d_begin As Date, ByVal d_end
     year_diff = year(d_end) - year(d_begin)
     quartet_index_diff = quartet_index(year(d_end)) - quartet_index(year(d_begin))
     
-    If year_diff = 0 Then
+    If year_diff = 0 And is_year_leap(d_begin) Then
         result = DateDiff("d", d_begin, d_end)
         first_quartet_leap_year_days = result
         Exit Function
@@ -74,14 +90,14 @@ Private Function first_quartet_leap_year_days(ByVal d_begin As Date, ByVal d_end
     If quartet_index_diff = 0 Then
     
         If is_year_leap(d_begin) Then
-            result = DateDiff("d", d_begin, CDate(DateSerial(year(d_begin) + 1, 1, 1)))
+            result = DateDiff("d", d_begin, CDate(DateSerial(year(d_begin), 12, 31)))
             first_quartet_leap_year_days = result
             Exit Function
         
         End If
         
         If is_year_leap(d_end) Then
-            result = DateDiff("d", CDate(DateSerial(year(d_end), 1, 1)), d_end)
+            result = DateDiff("d", CDate(DateSerial(year(d_end) - 1, 12, 31)), d_end)
             first_quartet_leap_year_days = result
             Exit Function
         End If
@@ -89,7 +105,7 @@ Private Function first_quartet_leap_year_days(ByVal d_begin As Date, ByVal d_end
     Else
     
         If is_year_leap(d_begin) Then
-            result = DateDiff("d", d_begin, CDate(DateSerial(year(d_begin) + 1, 1, 1)))
+            result = DateDiff("d", d_begin, CDate(DateSerial(year(d_begin), 12, 31)))
             first_quartet_leap_year_days = result
             Exit Function
         Else
@@ -130,7 +146,7 @@ Private Function first_quartet_nonleap_days(ByVal d_begin As Date, ByVal d_end A
     If quartet_index_diff = 0 Then
         
         If Not is_year_leap(d_begin) Then
-            result = result + DateDiff("d", d_begin, CDate(DateSerial(year(d_begin) + 1, 1, 1)))
+            result = result + DateDiff("d", d_begin, CDate(DateSerial(year(d_begin), 12, 31)))
         End If
         
         If year_diff > 1 Then
@@ -138,12 +154,12 @@ Private Function first_quartet_nonleap_days(ByVal d_begin As Date, ByVal d_end A
         End If
         
         If Not is_year_leap(d_end) Then
-            result = result + DateDiff("d", DateSerial(year(d_end), 1, 1), d_end)
+            result = result + DateDiff("d", DateSerial(year(d_end) - 1, 12, 31), d_end)
         End If
         
     Else
         If Not is_year_leap(d_begin) Then
-            result = result + DateDiff("d", d_begin, CDate(DateSerial(year(d_begin) + 1, 1, 1)))
+            result = result + DateDiff("d", d_begin, CDate(DateSerial(year(d_begin), 12, 31)))
         End If
         
         Dim q_index As Integer
@@ -205,7 +221,7 @@ Private Function last_quartet_leap_year_days(ByVal d_begin As Date, ByVal d_end 
     If quartet_index_diff > 0 Then
     
         If is_year_leap(d_end) Then
-            result = DateDiff("d", CDate(DateSerial(year(d_end), 1, 1)), d_end)
+            result = DateDiff("d", CDate(DateSerial(year(d_end) - 1, 12, 31)), d_end)
         End If
         
     End If
@@ -235,7 +251,7 @@ Private Function last_quartet_nonleap_year_days(ByVal d_begin As Date, ByVal d_e
         End If
         
         If Not is_year_leap(d_end) Then
-            result = result + DateDiff("d", CDate(DateSerial(year(d_end), 1, 1)), d_end)
+            result = result + DateDiff("d", CDate(DateSerial(year(d_end) - 1, 12, 31)), d_end)
         End If
             
         
