@@ -1,4 +1,4 @@
-Attribute VB_Name = "leap_days"
+Attribute VB_Name = "leap_days_functions"
 Const d_min As String = "01.03.1900"
 Const d_max As String = "01.01.2900"
 
