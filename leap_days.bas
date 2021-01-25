@@ -5,7 +5,7 @@ Const d_max As String = "01.01.2900"
 
 Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
     
-    Dim d_begin, d_end As Date
+    Dim d_begin as Date, d_end As Date
     
     count_first_day = IIf(count_first_day <> 0, 1, 0)
     count_last_day = IIf(count_last_day <> 0, 1, 0)
@@ -39,7 +39,7 @@ End Function
 
 Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
 
-    Dim d_begin, d_end As Date
+    Dim d_begin as Date, d_end As Date
     
     count_first_day = IIf(count_first_day <> 0, 1, 0)
     count_last_day = IIf(count_last_day <> 0, 1, 0)
