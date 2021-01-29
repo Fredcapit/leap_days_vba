@@ -3,11 +3,6 @@ Const d_min As String = "01.03.1900"
 Const d_max As String = "01.01.2900"
 
 
-Const d_min As String = "01.03.1900"
-Const d_max As String = "01.01.2900"
-
-
-
 Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
     
     Dim d_begin, d_end As Date
@@ -23,7 +18,7 @@ Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Option
     check_error = check_constrains(d_begin, d_end)
     
     If IsError(check_error) Then
-        Leap_days = check_error
+        LEAP_DAYS = check_error
         Exit Function
     End If
     
@@ -46,7 +41,7 @@ Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Option
     If is_year_leap(d_end) And count_last_day = 0 Then result = result - 1
     
     
-    Leap_days = result
+    LEAP_DAYS = result
 End Function
 
 Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Optional count_first_day = 0, Optional count_last_day = 1) As Long
@@ -64,7 +59,7 @@ Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Op
     check_error = check_constrains(d_begin, d_end)
     
     If IsError(check_error) Then
-        NON_Leap_days = check_error
+        NON_LEAP_DAYS = check_error
         Exit Function
     End If
     
@@ -87,12 +82,8 @@ Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Op
     If Not is_year_leap(d_end) And count_last_day = 0 Then result = result - 1
     
     
-    NON_Leap_days = result
+    NON_LEAP_DAYS = result
 End Function
-
-
-
-
 
 Private Function check_constrains(ByVal d_begin As Date, ByVal d_end As Date) As Variant
     
@@ -104,6 +95,7 @@ Private Function check_constrains(ByVal d_begin As Date, ByVal d_end As Date) As
     End If
     
 End Function
+                        
 Private Function is_year_leap(ByVal d_date As Date) As Boolean
 
     Dim int_year  As Integer
