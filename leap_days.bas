@@ -25,7 +25,7 @@ Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Option
     Dim result As Long
     result = 0
     
-    If is_year_leap(d_begin) Then
+    If is_year_leap(d_begin) And Year(d_end)>Year(d_begin) Then
         result = DateSerial(year(d_begin), 12, 31) - d_begin
     End If
     
@@ -33,13 +33,15 @@ Public Function LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Option
         result = result + (DateSerial(year(d_end), 1, 1) - DateSerial(year(d_begin) + 1, 1, 1) - (year(d_end) - year(d_begin) - 1) * 365) * 366
     End If
     
-    If is_year_leap(d_end) Then
+    If is_year_leap(d_end)  And Year(d_end)>Year(d_begin)  Then
         result = result + (d_end - DateSerial(year(d_end), 1, 1) + 1)
     End If
     
     If is_year_leap(d_begin) And count_first_day = 1 Then result = result + 1
     If is_year_leap(d_end) And count_last_day = 0 Then result = result - 1
-    
+    If is_year_leap(d_end) And Year(d_begin)=Year(d_end) Then
+         result = d_end - d_begin
+    End If
     
     LEAP_DAYS = result
 End Function
@@ -66,7 +68,7 @@ Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Op
     Dim result As Long
     result = 0
     
-    If Not is_year_leap(d_begin) Then
+    If Not is_year_leap(d_begin)  And Year(d_end)>Year(d_begin) Then
         result = DateSerial(year(d_begin), 12, 31) - d_begin
     End If
     
@@ -74,13 +76,15 @@ Public Function NON_LEAP_DAYS(ByVal val_begin As Long, ByVal val_end As Long, Op
         result = result + (DateSerial(year(d_end), 1, 1) - DateSerial(year(d_begin) + 1, 1, 1)) - (DateSerial(year(d_end), 1, 1) - DateSerial(year(d_begin) + 1, 1, 1) - (year(d_end) - year(d_begin) - 1) * 365) * 366
     End If
     
-    If Not is_year_leap(d_end) Then
+    If Not is_year_leap(d_end) And Year(d_end)>Year(d_begin) Then
         result = result + (d_end - DateSerial(year(d_end), 1, 1) + 1)
     End If
     
     If Not is_year_leap(d_begin) And count_first_day = 1 Then result = result + 1
     If Not is_year_leap(d_end) And count_last_day = 0 Then result = result - 1
-    
+    If Not is_year_leap(d_end) And Year(d_begin)=Year(d_end) Then
+         result = d_end - d_begin
+    End If
     
     NON_LEAP_DAYS = result
 End Function
